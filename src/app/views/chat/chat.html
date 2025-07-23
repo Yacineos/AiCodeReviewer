@@ -1,1 +1,7 @@
-<p>chat works!</p>
+<input type="text" 
+       placeholder="Paste your code here..."
+       [formControl]="codeInput" 
+       />
+<button (click)="reviewCode()">Review</button>
+<br>
+<p>{{ aiAnswer() }}</p>
