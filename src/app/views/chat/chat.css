@@ -1,0 +1,218 @@
+.chat-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.input-section {
+  margin-bottom: 2rem;
+}
+
+.code-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  background-color: #f8f9fa;
+  transition: border-color 0.3s ease;
+}
+
+.code-input:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+.code-input:disabled {
+  background-color: #f5f5f5;
+  opacity: 0.7;
+}
+
+.review-button {
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-button:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.review-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.result-section {
+  margin-top: 2rem;
+}
+
+.ai-response {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+.response-header {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #0056b3;
+}
+
+.response-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.model-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.review-content {
+  padding: 1.5rem;
+  line-height: 1.7;
+  color: #212529;
+  font-size: 15px;
+}
+
+.review-primary-title {
+  color: #007bff;
+  margin: 1.5rem 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
+}
+
+.review-main-title {
+  color: #495057;
+  margin: 1.25rem 0 0.75rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.review-section-title {
+  color: #6c757d;
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.5rem 0;
+  border-left: 4px solid #007bff;
+  padding-left: 1rem;
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.review-highlight {
+  color: #007bff;
+  font-weight: 600;
+  background-color: rgba(0, 123, 255, 0.1);
+  padding: 0.125rem 0.25rem;
+  border-radius: 3px;
+}
+
+.review-code-block {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.review-code-block pre {
+  margin: 0;
+  padding: 1rem;
+  background-color: #2d3748;
+  color: #e2e8f0;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.review-code-block code {
+  color: inherit;
+  background: none;
+  padding: 0;
+}
+
+.review-inline-code {
+  background-color: #f1f3f4;
+  color: #d73a49;
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.review-list-item {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.review-list-item.numbered {
+  background-color: rgba(40, 167, 69, 0.05);
+  border-left: 3px solid #28a745;
+  counter-increment: review-counter;
+}
+
+.review-list-item.numbered::before {
+  content: counter(review-counter) ". ";
+  font-weight: 600;
+  color: #28a745;
+}
+
+.review-list-item.bullet {
+  background-color: rgba(255, 193, 7, 0.05);
+  border-left: 3px solid #ffc107;
+  color: #495057;
+}
+
+.review-content {
+  counter-reset: review-counter;
+}

@@ -1,19 +1,93 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable, signal, inject } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
+interface GeminiResponse {
+  candidates: Array<{
+    content: {
+      parts: Array<{
+        text: string;
+      }>;
+    };
+  }>;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AiService {
-    
+    private readonly http = inject(HttpClient);
     private readonly _aiAnswer = signal<string>('');
+    private readonly _isLoading = signal<boolean>(false);
+    
     public readonly aiAnswer = this._aiAnswer.asReadonly();
+    public readonly isLoading = this._isLoading.asReadonly();
 
-    public reviewCode(code: string) {
+    public async reviewCode(code: string): Promise<void> {
         if (code.trim() === '') {
             alert('Please enter some code to review.');
             return;
         }
 
-        this._aiAnswer.set(`AI Review: The code "${code}" you provided is well-structured and follows best practices.`);
+        this._isLoading.set(true);
+        this._aiAnswer.set('');
+
+        try {
+            const prompt = `Please review the following code and provide constructive feedback on:
+1. Code quality and best practices
+2. Potential bugs or issues
+3. Performance improvements
+4. Security considerations
+5. Suggestions for improvement
+
+Code to review:
+\`\`\`
+${code}
+\`\`\``;
+
+            const response = await this.callGeminiAPI(prompt);
+            this._aiAnswer.set(response);
+        } catch (error) {
+            console.error('Error calling AI API:', error);
+            this._aiAnswer.set('Sorry, there was an error processing your request. Please try again.');
+        } finally {
+            this._isLoading.set(false);
+        }
+    }
+
+    private async callGeminiAPI(prompt: string): Promise<string> {
+        const apiKey = environment.geminiApiKey;
+        if (!apiKey) {
+            throw new Error('Gemini API key not configured');
+        }
+
+        const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+        
+        const requestBody = {
+            contents: [{
+                parts: [{
+                    text: prompt
+                }]
+            }],
+            generationConfig: {
+                temperature: 0.7,
+                topK: 40,
+                topP: 0.95,
+                maxOutputTokens: 1024,
+            }
+        };
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-goog-api-key': apiKey
+        };
+
+        const response = await this.http.post<GeminiResponse>(url, requestBody, { headers }).toPromise();
+        
+        if (response?.candidates?.[0]?.content?.parts?.[0]?.text) {
+            return response.candidates[0].content.parts[0].text;
+        } else {
+            throw new Error('Invalid response from AI API');
+        }
     }
 }

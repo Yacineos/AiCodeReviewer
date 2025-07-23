@@ -1,7 +1,34 @@
-<input type="text" 
-       placeholder="Paste your code here..."
-       [formControl]="codeInput" 
-       />
-<button (click)="reviewCode()">Review</button>
-<br>
-<p>{{ aiAnswer() }}</p>
+<div class="chat-container">
+  <div class="input-section">
+    <textarea 
+           placeholder="Paste your code here for AI review..."
+           [formControl]="codeInput" 
+           rows="10"
+           [disabled]="isLoading()"
+           class="code-input">
+    </textarea>
+    <button 
+        (click)="reviewCode()" 
+        [disabled]="isLoading() || !codeInput.value?.trim()"
+        class="review-button">
+      @if (isLoading()) {
+        <span class="loading-spinner"></span>
+        Analyzing...
+      } @else {
+        Review Code
+      }
+    </button>
+  </div>
+  
+  <div class="result-section">
+    @if (aiAnswer()) {
+      <div class="ai-response">
+        <div class="response-header">
+          <h3>🤖 AI Code Review</h3>
+          <span class="model-badge">Gemini 2.0 Flash</span>
+        </div>
+        <div class="review-content" [innerHTML]="formattedAiAnswer()"></div>
+      </div>
+    }
+  </div>
+</div>
