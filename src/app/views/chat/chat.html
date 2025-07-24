@@ -1,7 +1,31 @@
 <div class="chat-container">
+  <header class="chat-header">
+    <h1>AI Code Reviewer</h1>
+    <p class="subtitle">Analysez votre code avec l'intelligence artificielle pour des suggestions d'amélioration</p>
+  </header>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🔍</span>
+      <h3>Analyse Approfondie</h3>
+      <p>Détection des bugs potentiels et des mauvaises pratiques</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💡</span>
+      <h3>Suggestions Smart</h3>
+      <p>Recommandations pour améliorer la qualité du code</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <h3>Rapide et Précis</h3>
+      <p>Résultats instantanés avec Gemini 2.0</p>
+    </div>
+  </div>
+
   <div class="input-section">
+    <h2>Collez votre code ci-dessous</h2>
     <textarea 
-           placeholder="Paste your code here for AI review..."
+           placeholder="Collez votre code ici pour une revue IA détaillée..."
            [formControl]="codeInput" 
            rows="10"
            [disabled]="isLoading()"
