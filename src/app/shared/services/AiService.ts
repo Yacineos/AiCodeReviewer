@@ -33,12 +33,12 @@ export class AiService {
         this._aiAnswer.set('');
 
         try {
-            const prompt = `Please review the following code and provide constructive feedback on:
-1. Code quality and best practices
-2. Potential bugs or issues
-3. Performance improvements
-4. Security considerations
-5. Suggestions for improvement
+            const prompt = `You are a code expert and you should review the following code and provide constructive feedback on:
+1. Code quality (SOLID, clean code, ...) and best practices (design patterns, code organization, ...)
+2. Potential bugs or issues (e.g., logic errors, edge cases, performance issues)
+3. Performance improvements (e.g., time complexity, space complexity)
+4. Security considerations (e.g., authentication, data validation)
+5. Suggestions for improvement (e.g., code structure, readability)
 
 Code to review:
 \`\`\`
